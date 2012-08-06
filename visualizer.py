@@ -7,10 +7,14 @@ class Visualizer:
 	def __init__(self):
 		self.window = pyglet.window.Window()
 		self.window.set_handler('on_draw', self.onDraw)
+		pyglet.clock.schedule_interval(self.update, 1)
 		glClearColor(1, 1, 1, 1)
 
 	def onDraw(self):
 		glClear(GL_COLOR_BUFFER_BIT)
+
+	def update(self, dt=0):
+		pass
 
 	def run(self):
 		pyglet.app.run()
