@@ -5,6 +5,7 @@ from pyglet.gl import *
 
 class Visualizer:
 	def __init__(self):
+		self.game = chess.Game()
 		self.window = pyglet.window.Window()
 		self.window.set_handler('on_draw', self.onDraw)
 		pyglet.clock.schedule_interval(self.update, 1)
@@ -14,7 +15,13 @@ class Visualizer:
 		glClear(GL_COLOR_BUFFER_BIT)
 
 	def update(self, dt=0):
-		pass
+		command = self.getCommand()
+		if command:
+			self.game.move(command)
+			self.game.advance()
+
+	def getCommand(self):
+		return None
 
 	def run(self):
 		pyglet.app.run()
