@@ -1,10 +1,12 @@
+from exceptions import StopIteration
 import re
 import chess
 import pyglet
 from pyglet.gl import *
 
 class Visualizer:
-	def __init__(self):
+	def __init__(self, commands):
+		self.commands = commands
 		self.game = chess.Game()
 		self.window = pyglet.window.Window()
 		self.window.set_handler('on_draw', self.onDraw)
@@ -21,7 +23,10 @@ class Visualizer:
 			self.game.advance()
 
 	def getCommand(self):
-		return None
+		try:
+			return self.commands.next()
+		except StopIteration:
+			return None
 
 	def run(self):
 		pyglet.app.run()
