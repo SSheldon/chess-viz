@@ -15,6 +15,8 @@ class Visualizer:
 
 	def onDraw(self):
 		glClear(GL_COLOR_BUFFER_BIT)
+		for row in self.game.show():
+			print row
 
 	def update(self, dt=0):
 		command = self.getCommand()
@@ -31,12 +33,7 @@ class Visualizer:
 	def run(self):
 		pyglet.app.run()
 
-game = chess.Game()
-for row in game.show():
-	print row
-for line in open('samples-pgn/simple.pgn'):
-	for command in re.findall(r'[^\s\.]+(?!\S)', line):
-		game.move(command)
-		for row in game.show():
-			print row
-		game.advance()
+commands = (command for line in open('samples-pgn/simple.pgn')
+	for command in re.findall(r'[^\s\.]+(?!\S)', line))
+viz = Visualizer(commands)
+viz.run()
